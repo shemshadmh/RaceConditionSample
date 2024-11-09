@@ -1,0 +1,24 @@
+@RaceConditionSample_HostAddress = http://localhost:5246
+
+GET {{RaceConditionSample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{RaceConditionSample_HostAddress}}/api/Users/
+Accept: application/json
+
+###
+
+GET {{RaceConditionSample_HostAddress}}/api/Users/1
+Accept: application/json
+
+###
+
+POST {{RaceConditionSample_HostAddress}}/api/Users/
+Content-Type: application/json
+
+{
+  "username": "string1",
+  "email": "string1"
+}
