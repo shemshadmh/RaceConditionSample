@@ -73,17 +73,16 @@ public class UserService : IUserService
 
     public async Task<bool> CreateUserAsyncKeyedLock(UserDto userDto)
     {
+        // Lock the method
+        using var @lock = await _asyncKeyedLocker.LockAsync("EmailCheck");
+
         // Check if the username already exists
         if (await UsernameExistsAsync(userDto.Username))
             return false;
 
-        // Lock the email check
-        using (await _asyncKeyedLocker.LockAsync("EmailCheck"))
-        {
-            // Check if the email already exists
-            if (await EmailExistsAsync(userDto.Email))
-                return false;
-        }
+        // Check if the email already exists
+        if (await EmailExistsAsync(userDto.Email))
+            return false;
 
         var user = new User()
         {
